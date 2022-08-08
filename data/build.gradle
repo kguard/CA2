@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -11,17 +11,15 @@ android {
         enabled=true
     }
     defaultConfig {
-        applicationId "com.kguard.ca2"
         minSdk 26
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
-        buildConfigField "String", "SERVICE_KEY", "\"${properties.getProperty("SERVICE_KEY")}\""
+        buildConfigField "String", "BASE_URL", "\"${properties.getProperty("BASE_URL")}\""
     }
 
     buildTypes {
@@ -44,12 +42,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation project(':data')
     implementation project(':domain')
 
     // Dagger-Hilt
@@ -79,12 +75,4 @@ dependencies {
 
     // Location Services
     implementation 'com.google.android.gms:play-services-location:20.0.0'
-
-
-
-
-
-
-
-
 }
